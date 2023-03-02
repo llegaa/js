@@ -10,7 +10,6 @@ switch (num) {
         }
     }
 
-    console.log("1 Задание");
 
     let speed = prompt("Введите скорость в км/ч");
     console.log(convertSpeed(speed, "toMS"));
@@ -19,18 +18,20 @@ switch (num) {
     console.log(convertSpeed(speed, "toKMH"));
     
     break;
+
   case "2":
     function absValue(value) {
         if (value > 0) {
             return value
         }
-        return -1*value
+        else return -1*value;
     }
 
     number = prompt("Введите число чтобы узнать модуль")
-    absValue(number);
-
+    
+    console.log(`${absValue(number)}`);
     break;
+
   case "3":
     let student = {
       group: 201,
@@ -38,12 +39,18 @@ switch (num) {
       first_name: "Иван",
     };
 
-    console.log(`Список свойств: ${student.key}`);
+    
+    let str=``
+    for (key in student){
+        str +=`${key} `;
+    }
 
+    console.log(`${str}`);
     console.log(
       `Студент ${student.first_name} ${student.last_name} учится в ${student.group} группе`
     );
     break;
+
   case "4":
     function sampleArray(min, max) {
         return Math.floor(Math.random() * (max - min)) + parseInt(min);
@@ -54,6 +61,7 @@ switch (num) {
     
     console.log(sampleArray(min, max));
     break;
+
   case "5":
     let mass = [1, 2, 3, 4];
     let mass1 = [];
