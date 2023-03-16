@@ -9,6 +9,8 @@ switch (num) {
           return speed * 3.6;
         }
     }
+
+
     let speed = prompt("Введите скорость в км/ч");
     console.log(convertSpeed(speed, "toMS"));
 
