@@ -1,74 +1,81 @@
-let num = prompt("Введите номер задания");
-switch (num) {
-  case "1":
-    function convertSpeed(speed, conv_to) {
-        if (conv_to === "toKMH") {
-          return speed / 3.6;
-  
-        } else if (conv_to === "toMS") {
-          return speed * 3.6;
-        }
-    }
+const modal = document.getElementById("myModal")
+const button = document.getElementById("myButton")
+const span = document.getElementsByClassName("close")[0]
+const show_pass = document.getElementById("show_pass")
 
 
-    let speed = prompt("Введите скорость в км/ч");
-    console.log(convertSpeed(speed, "toMS"));
-
-    speed = prompt("Введите скорость к м/с")
-    console.log(convertSpeed(speed, "toKMH"));
+function onFormSubmit(event){
+    event.preventDefault();``
+    const form = event.currentTarget
     
-    break;
+    const inputs = form.querySelectorAll("input[required]")
 
-  case "2":
-    function absValue(value) {
-        if (value > 0) {
-            return value
-        }
-        else return -1*value;
-    }
-
-    number = prompt("Введите число чтобы узнать модуль")
-    
-    console.log(`${absValue(number)}`);
-    break;
-
-  case "3":
-    let student = {
-      group: 201,
-      last_name: "Иванов",
-      first_name: "Иван",
-    };
-
-    
-    let str=``
-    for (key in student){
-        str +=`${key} `;
-    }
-
-    console.log(`${str}`);
-    console.log(
-      `Студент ${student.first_name} ${student.last_name} учится в ${student.group} группе`
-    );
-    break;
-
-  case "4":
-    function sampleArray(min, max) {
-        return Math.floor(Math.random() * (max - min)) + parseInt(min);
-    }  
-
-    let min = prompt("Введите левый передел");
-    let max = prompt("Введите правый передел");
-    
-    console.log(sampleArray(min, max));
-    break;
-
-  case "5":
-    let mass = [1, 2, 3, 4];
-    let mass1 = [];
-    let count = prompt("Введите количество чисел от 1 до 4");
-    for (let i = 0; i < count; i++) {
-      mass1[i] = mass[sampleArray(0, 4)];
-    }
-    console.log(`[${mass}] -> [${mass1}]`);
-    break;
+    const formData = new FormData(form)
+    console.table({
+        "Email": formData.get("email"),
+        "Пароль": formData.get("password")
+    })
 }
+
+
+function onInputBlur(event) {
+    const input = event.currentTarget;
+    const validState = input.validity;
+
+    let errorMessage = "";
+    if(validState.valueMissing) {
+        errorMessage = "Поле не заполнено";
+    }
+    else if (validState.tooShort) {
+        errorMessage = `Минимальная длина ${input.minLength} символов`;
+    }
+    else if (validState.typeMismatch) {
+        errorMessage = "Неправильный формат ввода почты пример: example@mail.ru";
+    }
+    else if (validState.valid) {
+        errorMessage = "";
+    }
+
+    input.setCustomValidity(errorMessage);
+
+    //input.reportValidity();
+
+    const wrapper = input.closest("li");
+    const errorMsgElem = wrapper.querySelector(".error");
+
+    errorMsgElem.textContent = errorMessage;
+}
+
+
+function showPass() {
+    const pass = document.getElementById("password")
+    if (pass.type === "text"){
+        pass.type = "password"
+    }else{
+        pass.type = "text"
+    }
+}
+
+button.onclick = function() {
+    modal.style.display = "block"
+}
+
+span.onclick = function() {
+    modal.style.display = "none"
+}
+
+show_pass.addEventListener("pointerdown", showPass)
+show_pass.addEventListener("pointerup", showPass)
+
+const form = document.getElementById("registerModal")
+form.addEventListener("submit", onFormSubmit)
+form.querySelectorAll("input[required]").forEach(input => {
+    input.addEventListener("blur", onInputBlur)
+})
+
+window.onclick = function(event){
+if(event.target == modal){
+modal.style.display= "none";
+}
+}
+
