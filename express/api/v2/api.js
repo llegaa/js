@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {getAllStats, getMainText, getComments, postAddComments, getMyComments} from '../../controllers/comments.js'
+import {getAllStats, getMainText, getComments, postAddComments, getMyComments} from '../../controllers/controller.js'
 import {validateInput} from "../middlewares/middleware.js";
 
 

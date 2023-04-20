@@ -5,8 +5,8 @@ import path from 'path';
 import bodyParser from "body-parser";
 import {authorizationApi, badURL, myHelmet, myMorgan} from "./api/middlewares/middleware.js";
 
-const {connectToDB, getDb} = require('./configs/mongodb.config')
-let db;
+//const {connectToDB, getDb} = require('./configs/mongodb.config')
+//let db;
 const app = express()
 
 const port = 8000
