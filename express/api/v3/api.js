@@ -6,9 +6,7 @@ import {getMainText,
     getMyComments,
     findModel, addModels, updateModel, deleteModel,  addUser, deleteUser
 } from '../../controllers/controller.js'
-import {validateInput} from "../middlewares/middleware.js";
-
-
+import {authorizationApi} from "../middlewares/middleware.js";
 
 const handlers = Router()
 
@@ -19,7 +17,7 @@ const handlers = Router()
  handlers.get('/models/:id', findModel)
 
  handlers.post('/comments', postAddComments)
- handlers.post('/models', addModels)
+ handlers.post('/models', authorizationApi, addModels)
 
  handlers.put('/models/:id',updateModel )
  handlers.delete('/models/:id', deleteModel)

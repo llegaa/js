@@ -1,12 +1,9 @@
 import handlers from './api/v3/api.js';
-import router from './api/v1/api.js';
 import express from 'express';
 import path from 'path';
 import bodyParser from "body-parser";
 import {authorizationApi, badURL, myHelmet, myMorgan} from "./api/middlewares/middleware.js";
 
-//const {connectToDB, getDb} = require('./configs/mongodb.config')
-//let db;
 const app = express()
 
 const port = 8000

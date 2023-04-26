@@ -1,6 +1,5 @@
-import {connDB, getDb} from "../configs/mongodb.config.js";
 import {getAll, findID, addOne, delOne, updModel, getApiKey, delApiKey} from "../services/service.js";
-import {ObjectId} from 'mongodb'
+import {ObjectId} from "mongodb"
 
 export async function getMainText(req,res){
     res.status(200).send("hello")
@@ -19,12 +18,12 @@ export async function postAddComments(req, res){
 }
 
 export async function getComments(req, res){
-    res.status(200).send(await getAll(comments))
+    res.status(200).send(await getAll("comments"))
 }
 
 export async function getMyComments(req, res){
     if (ObjectId.isValid(req.params.id)){
-        const result = await findID(comments, req.params.id)
+        const result = await findID("comments", req.params.id)
         res.status(200).send(result)
     }else{
         res.status(400).send("id param is not valid")
@@ -44,7 +43,7 @@ export async function addModels(req, res){
 }
 export async function findModel(req, res){
     if (ObjectId.isValid(req.params.id)){
-        const result = await findID(models, req.params.id)
+        const result = await findID("models", req.params.id)
         res.status(200).send(result)
     }else{
         res.status(400).send("id param is not valid")
@@ -52,7 +51,7 @@ export async function findModel(req, res){
 }
 export async function deleteModel(req, res){
     if (ObjectId.isValid(req.params.id)){
-        await delOne(models, req.params.id)
+        await delOne("models", req.params.id)
         res.status(200).send("Model delete")
     }else{
         res.status(400).send("id param is not valid")
@@ -62,7 +61,7 @@ export async function updateModel(req,res){
     const data = req.body;
     if (ObjectId.isValid(req.params.id)){
         if (data.nameUser || data.nameModel || data.type || data.model || data.description || data.comments){
-        await updModel(req.params.id,data).then(() => {
+        await updModel(req.params.id, data).then(() => {
             res.status(200).send("data update")
         })}
     }else{
