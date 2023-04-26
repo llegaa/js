@@ -1,4 +1,4 @@
-import handlers from './api/v2/api.js';
+import handlers from './api/v3/api.js';
 import router from './api/v1/api.js';
 import express from 'express';
 import path from 'path';
@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 //
 app.use(express.static(path.resolve(__dirname, 'public')))
 
-app.use('/api/v2', authorizationApi, handlers)
+app.use('/api/v3', authorizationApi, handlers)
 
 app.use(badURL)
 //

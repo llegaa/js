@@ -1,61 +1,101 @@
 import {connDB, getDb} from "../configs/mongodb.config.js";
-import {getAllComments, addComments, findComment} from "../services/service.js";
+import {getAll, findID, addOne, delOne, updModel, getApiKey, delApiKey} from "../services/service.js";
 import {ObjectId} from 'mongodb'
 
-
-
-export const getMainText = (req, res) => {
-    res.send('Hello')
+export async function getMainText(req,res){
+    res.status(200).send("hello")
 }
+export async function postAddComments(req, res){
+    const data = req.body;
 
-export const getAllStats = (req, res) => {
-    const name = req.headers['user-agent']
-    let firstHtml =
-        '<table>' +
-        '<tr>' +
-        '<td>Name</td>' +
-        '<td>Count request</td>' +
-        '</tr>'
-    let secondHtml = ''
+    if (data.name && data.text){
 
-    if (users[name]) {
-        users[name] += 1
+        addOne("comments", data).then(() => {
+            res.status(200).send("data send")
+        })
     }else{
-        users[name] = 1
+        res.status(400).send("Error: No data input")
     }
-    for (const key in users) {
-        secondHtml +=
-            `<tr>
-                <td>${key}</td>
-                <td>${users[key]}</td>
-            </tr>`
-    }
-    let resHtml = firstHtml + secondHtml + '</table>'
-    res.send(resHtml)
 }
 
 export async function getComments(req, res){
-    res.status(200).send(await getAllComments())
+    res.status(200).send(await getAll(comments))
 }
 
 export async function getMyComments(req, res){
     if (ObjectId.isValid(req.params.id)){
-        const result = await findComment(req.params.id)
+        const result = await findID(comments, req.params.id)
         res.status(200).send(result)
     }else{
         res.status(400).send("id param is not valid")
     }
 }
 
-export async function postAddComments(req, res){
-    const {name, text} = req.body;
+export async function getModels(req, res){
+    res.status(200).send(await getAll("models"))
+}
+export async function addModels(req, res){
+    const data = req.body;
+    if (data.name && data.name_model && data.type && data.model && data.description && data.comments){
+        await addOne("models", data)
+        res.send("data send")
+    }
+    else res.status(400).send("Error: No data send")
+}
+export async function findModel(req, res){
+    if (ObjectId.isValid(req.params.id)){
+        const result = await findID(models, req.params.id)
+        res.status(200).send(result)
+    }else{
+        res.status(400).send("id param is not valid")
+    }
+}
+export async function deleteModel(req, res){
+    if (ObjectId.isValid(req.params.id)){
+        await delOne(models, req.params.id)
+        res.status(200).send("Model delete")
+    }else{
+        res.status(400).send("id param is not valid")
+    }
+}
+export async function updateModel(req,res){
+    const data = req.body;
+    if (ObjectId.isValid(req.params.id)){
+        if (data.nameUser || data.nameModel || data.type || data.model || data.description || data.comments){
+        await updModel(req.params.id,data).then(() => {
+            res.status(200).send("data update")
+        })}
+    }else{
+        res.status(400).send("Error: No data update")
+    }
+}
+export async function addUser(req, res){
 
-    if (name && text){
+    const data = req.body;
 
-        addComments({name, text}).then(() => {
+    if (data.name){
+        const number = Math.floor(Math.random() * 1000);
+        const apikey = data.name + number
+        const result = {
+            "name": data.name,
+            "apikey": apikey}
+
+
+        addOne("users", result).then(() => {
             res.status(200).send("data send")
         })
     }else{
         res.status(400).send("Error: No data input")
     }
+}
+export async function deleteUser(req, res){
+    const apikey = req.headers["apikey"]
+    const apiKey = await getApiKey()
+    if(apiKey.includes(apikey)){
+        if(await delApiKey(apikey)){
+            res.status(200).send("Api ключ удален")
+        }
+        else{res.status(400).send("Ключ не найден")}
+
+    } else{res.status(400).send("Ключ не найден")}
 }
