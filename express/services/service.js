@@ -13,7 +13,10 @@ connDB((err) => {
 export async function getAll(collection){
     try{
         const all  = db.collection(collection)
-        const result    = await all.find()
+        let result
+        if(collection==="models") {
+            result = await all.find({}, {projection: {name_model: 1}})
+        }else {result = await all.find()}
         return  result.toArray()
     }catch(err) {
         return err
@@ -48,9 +51,10 @@ export async function updModel(id, data){
 }
 export async function delApiKey(apikey){
     try {
-        const myApiKey = await db.collection("users").findOne({apikey: apikey})
+        const myApiKey = await db.collection("users").findOne({'apikey': apikey})
+        console.log(myApiKey)
         if(myApiKey){
-           return await myApiKey.deleteOne({apikey: apikey})
+           return await db.collection("users").deleteOne({'apikey': apikey})
         }
         else{return null}
     }catch (err){return err}
@@ -58,8 +62,10 @@ export async function delApiKey(apikey){
 export async function getApiKey(){
     const keys = []
     let apiKey = await getAll("users")
-    apiKey.forEach((el) => {keys.push(apiKey.apikey)})
+    apiKey.forEach((el) => {keys.push(el.apikey)})
     if(keys){
-        return keys}
-    else return null
+        return keys
+    }else {
+        return null
+    }
 }

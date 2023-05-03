@@ -3,7 +3,7 @@ import router from './api/v1/api.js';
 import express from 'express';
 import path from 'path';
 import bodyParser from "body-parser";
-import {authorizationApi, badURL, myHelmet, myMorgan} from "./api/middlewares/middleware.js";
+import {authorizationApi, badURL, myHelmet, myMorgan, err} from "./api/middlewares/middleware.js";
 
 //const {connectToDB, getDb} = require('./configs/mongodb.config')
 //let db;
@@ -26,6 +26,7 @@ app.use(express.static(path.resolve(__dirname, 'public')))
 app.use('/api/v3', authorizationApi, handlers)
 
 app.use(badURL)
+app.use(err)
 //
 app.listen(port, host, () => {
  console.log(`Server starting on ${hosting}`)
