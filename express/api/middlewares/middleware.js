@@ -5,6 +5,7 @@ import {getApiKey} from "../../services/service.js";
 const error = new Error("Ошибка")
 export const myHelmet = helmet()
 export const myMorgan = morgan('dev')
+
 export function validateInput(req, res, next)  {
     const userInput = req.body;
     const regex = /[@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
@@ -12,7 +13,9 @@ export function validateInput(req, res, next)  {
     if (containsSpecialChars) return res.send(400, "Неправильные данные");
     next();
 }
+
 export async function authorizationApi(req, res, next){
+<<<<<<< HEAD
     try {
         const keys = await getApiKey()
         if (keys) {
@@ -26,6 +29,19 @@ export async function authorizationApi(req, res, next){
             res.send('not apikey in databases')
         }
     }catch (e){next(e)}
+=======
+    const keys = await getApiKey()
+    if (keys) {
+        if (keys.includes(req.headers["apikey"]) && req.method !== "GET" && req.url !== "/login") {
+            return res.status(403).send('access denied')
+        }
+        else{
+            next()
+        }
+    }else{
+        res.send('not apikey in databases')
+    }
+>>>>>>> 592e23ef2ddb6c0baff2ba2e91407fe68289283c
 }
 
 export function badURL(req, res){
