@@ -30,7 +30,7 @@ paths:
               name:
                 type: string
             example:
-              name: seva
+              name: ffff
       produces:
         - text/plain
       responses:
@@ -76,7 +76,7 @@ paths:
               text:
                 type: string
             example:
-              name: seva
+              name: ffff
               text: good comment
       produces:
         - text/plain
@@ -120,7 +120,7 @@ paths:
               text:
                 type: string
             example:
-              name: seva
+              name: ffff
               text: good comment
       produces:
         - text/plain
@@ -186,7 +186,7 @@ paths:
               comments:
                 type: string
             example:
-              name: seva
+              name: ffff
               name_model: cube
               type: 3d
               model: {data: "12431814828142441"}
@@ -237,7 +237,7 @@ paths:
                     type: string
               example:   # Sample object
                 _id: 10
-                name: Seva
+                name: ffff
                 name_model: Triangle
                 type: 3d
                 model: {data: "12431814828142441"}
@@ -275,7 +275,7 @@ paths:
               comments:
                 type: array
             example:
-              name: seva
+              name: ffff
               name_model: cube
               type: 3d
               model: { data: "12431814828142441" }
