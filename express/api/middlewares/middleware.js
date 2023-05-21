@@ -1,10 +1,22 @@
 import helmet from 'helmet';
 import morgan from 'morgan';
 import {getApiKey} from "../../services/service.js";
-import swaggerJsDoc from "swagger-jsdoc";
 
 export const myHelmet = helmet()
 export const myMorgan = morgan('dev')
+
+export function originHeaderMiddleware(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, apikey");
+
+    if (req.method === "OPTIONS") {
+        res.status(200).send();
+    }
+    else {
+        next();
+    }
+}
 
 export function validateInput(req, res, next)  {
     const userInput = req.body;
