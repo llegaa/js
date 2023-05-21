@@ -48,12 +48,14 @@ export async function getModels(req, res, next){
 export async function addModels(req, res, next){
     try {
         const data = req.body;
-        if (data.name && data.name_model && data.type && data.model && data.description && data.comments){
+        if (data.name && data.name_model && data.type && data.model && data.descriptions && data.comments){
             await addOne("models", data)
             res.send("data send")
         }
         else res.status(400).send("Error: No data send")
-    }catch (e){next(e)}
+    }catch (e){
+        next(e)
+    }
 }
 
 export async function findModel(req, res, next){
@@ -85,7 +87,7 @@ export async function updateModel(req, res, next) {
     try {
         const data = req.body;
         if (ObjectId.isValid(req.params.id)) {
-            if (data.name || data.name_model || data.type || data.model || data.description || data.comments) {
+            if (data.name || data.name_model || data.type || data.model || data.descriptions || data.comments) {
                 await updModel(req.params.id, data)
                 res.status(200).send("data update")
             } else {
@@ -124,7 +126,7 @@ export async function deleteUser(req, res, next){
     try {
         const apikey = req.headers["apikey"]
         const apiKey = await getApiKey()
-        if(!apiKey.includes(apikey)){
+        if(!apikey.includes(apiKey)){
             if(await delApiKey(apikey)){
                 res.status(200).send("Api ключ удален")
             } else{
