@@ -99,23 +99,33 @@ export async function updateModel(req, res, next) {
     }
 }
 
-export function addUser(req, res, next){
+export async function addUser(req, res, next){
     try {
         const data = req.body;
-
-        if (data.name){
-            const number = Math.floor(Math.random() * 1000);
-            const apikey = data.name + number
-            const result = {
-                "name": data.name,
-                "apikey": apikey
+        let users = await getAll("users")
+        let apikey
+        for (let usersKey in users) {
+            if(users[usersKey].name === data.name){
+                apikey = users[usersKey].apikey
+            }else{
+                apikey = 0
             }
+        }
+        if(apikey){res.send(apikey)}else{
+            if (data.name){
+                const number = Math.floor(Math.random() * 1000);
+                apikey = data.name + number
+                const result = {
+                    "name": data.name,
+                    "apikey": apikey
+                }
 
-            addOne("users", result).then(() => {
-                res.send(`your apikey ${apikey}`)
-            })
-        }else{
-            res.status(400).send("Error: No data input")
+                addOne("users", result).then(() => {
+                    res.send(apikey)
+                })
+            }else{
+                res.status(400).send("Error: No data input")
+            }
         }
     }catch (e){
         next(e)

@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-
     <title>Title</title>
 </head>
 <body>
-    <h1></h1>
-    <table id="model"></table>
+    <h1>Express</h1>
+    <form method="post">
+        <label for="name">Имя:</label>
+        <input type="text" name="name" required placeholder="lena" id="name">
+        <button type="button" onclick="sendName()">Отправить</button>
+    </form>
+    <button id="update">Обновить таблицу</button>
+    <div id="table" class="flex">
+        <table id="model"></table>
+        <div id="flex-div"></div>
+    </div>
     <script src="models.js"></script>
-    <button onclick="getResponse()">изменить</button>
+
 </body>
 </html>
