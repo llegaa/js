@@ -10,11 +10,11 @@
     <form method="post">
         <label for="name">Имя:</label>
         <input type="text" name="name" required placeholder="lena" id="name">
-        <button type="button" onclick="sendName()">Отправить</button>
+        <button type="button" id="send" onclick="sendName()">Отправить</button>
     </form>
     <button id="update">Обновить таблицу</button>
     <div id="table" class="flex">
-        <table id="model"></table>
+        <table id="model"><caption>Список моделей</caption></table>
         <div id="flex-div"></div>
     </div>
     <script src="models.js"></script>

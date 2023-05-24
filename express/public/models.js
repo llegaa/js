@@ -11,7 +11,7 @@ async function getModels() {
              <td><button class="show" name="${content[arrayKey]._id}">Посмотреть</button></td>
              <td><button class="delete" id="${content[arrayKey]._id}">Удалить</button></td>
              </tr>`
-        }}else{list.innerHTML="Моделей нет"
+        }}else{list.innerHTML="<tr><td>Моделей нет</td></tr>"
     }
 }
 getModels();
@@ -20,7 +20,7 @@ const table= document.getElementById("table")
 const update = document.getElementById("update")
 function updTable(){
         let list = document.getElementById('model')
-        list.outerHTML = '<table id="model"></table>';
+        list.outerHTML = '<table id="model"><caption>Список моделей</caption></table>';
         getModels();
 }
 update.addEventListener("click", updTable)
@@ -33,7 +33,7 @@ async function sendName(){
     }
     let response = await fetch('http://127.0.0.1:8000/api/v3/login', {method: 'POST',headers:{"Content-type":"application/json"}, body: JSON.stringify(name_user)})
     Api = await response.text()
-    console.log(Api)
+    //console.log(Api)
 
 }
 
@@ -42,10 +42,11 @@ document.getElementById("table").addEventListener('click',function(event) {
     let target = event.target;
     if (target.className !== 'delete') return;
     let id = event.target.id;
-    fetch(`http://127.0.0.1:8000/api/v3/models/${id}`, {method: 'DELETE', headers: {"apikey":`${Api}`}}).then(updTable)
+    if(Api) fetch(`http://127.0.0.1:8000/api/v3/models/${id}`, {method: 'DELETE', headers: {"apikey":`${Api}`}}).then(updTable)
+    else{alert("Введите имя")}
 })
 
-console.log(Api)
+//console.log(Api)
 let name = undefined
 document.getElementById("table").addEventListener('click',function(event) {
     let flex_div
@@ -62,7 +63,7 @@ document.getElementById("table").addEventListener('click',function(event) {
             if (content[arrayKey]._id === event.target.name){
                 name = event.target.name
                 flex_div = document.getElementById("flex-div")
-                flex_div.outerHTML = '<table id="flex-div"></table>'
+                flex_div.outerHTML = `<table id="flex-div"><caption>Модель ${content[arrayKey].name_model}</caption></table>`
                 flex_div = document.getElementById("flex-div")
                 flex_div.innerHTML += `
             <tr><td>Имя:</td><td>${content[arrayKey].name}</td></tr>
@@ -75,6 +76,4 @@ document.getElementById("table").addEventListener('click',function(event) {
             }
         }
     }
-
-    //fetch(`http://127.0.0.1:8000/api/v3/models/${id}`, {method: 'DELETE', headers: {"apikey":`${Api}`}}).then(updTable)
 })

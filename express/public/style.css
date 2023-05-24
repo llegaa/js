@@ -1,3 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+:root {
+    font-family: "Montserrat", sans-serif;
+padding-bottom: 30px;
+}
 main {
     max-width: 38rem;
     padding: 2rem;
@@ -23,4 +28,56 @@ p,ul,ol {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    gap: 50px;
+}
+table {
+    font-size: 14px;
+    text-align: left;
+    border-collapse: collapse;
+    border-radius: 20px;
+}
+th {
+    padding: 10px 8px;
+    background: white;
+}
+table th:first-child {
+    border-top-left-radius: 20px;
+}
+table th:last-child {
+    border-top-right-radius: 20px;
+}
+td {
+    border-top: 10px solid #228B22;
+    padding: 8px;
+    background: white;
+}
+table td:first-child {
+    border-bottom-left-radius: 20px;
+}
+table td:last-child {
+    border-bottom-right-radius: 20px;
+}
+caption{
+    padding-bottom: 10px;
+}
+button{
+    border-radius: 5px;
+    border-color: #006400;
+    font-family: "Montserrat", sans-serif
+}
+input {
+    box-sizing: border-box;
+    width: 286px;
+    height: 50px;
+    border: 2px solid #006400;
+    border-radius: 5px;
+    margin-top: 0px;
+    padding-left: 1rem;
+}
+#send{
+    height: 50px;
+}
+#update{
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
