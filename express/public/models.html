@@ -8,9 +8,10 @@
 <body>
     <h1>Express</h1>
     <form method="post">
-        <label for="name">Имя:</label>
+        <span id="notify"><label for="name" >Введите имя:</label></span>
         <input type="text" name="name" required placeholder="lena" id="name">
-        <button type="button" id="send" onclick="sendName()">Отправить</button>
+       <button type="button" id="send" onclick="sendName()">Отправить</button>
+
     </form>
     <button id="update">Обновить таблицу</button>
     <div id="table" class="flex">

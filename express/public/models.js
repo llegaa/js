@@ -2,8 +2,9 @@ let content
 async function getModels() {
     let response = await fetch('http://127.0.0.1:8000/api/v3/models')
     content = await response.json()
+    console.log(content)
     let list = document.getElementById('model')
-    if(content){
+    if(content.length){
         for (let arrayKey in content) {
             list.innerHTML+=
                 `<tr class="row">
@@ -31,10 +32,13 @@ async function sendName(){
     let name_user = {
         name: input.value
     }
+    if(input.value){
     let response = await fetch('http://127.0.0.1:8000/api/v3/login', {method: 'POST',headers:{"Content-type":"application/json"}, body: JSON.stringify(name_user)})
+    let notify = document.getElementById("notify")
     Api = await response.text()
-    //console.log(Api)
-
+    console.log(Api)
+    notify.outerHTML = "<label for \"name\" style=\"color: #006400\">Имя введено</label>"
+    }
 }
 
 //let model = document.getElementById("model")
@@ -42,7 +46,7 @@ document.getElementById("table").addEventListener('click',function(event) {
     let target = event.target;
     if (target.className !== 'delete') return;
     let id = event.target.id;
-    if(Api) fetch(`http://127.0.0.1:8000/api/v3/models/${id}`, {method: 'DELETE', headers: {"apikey":`${Api}`}}).then(updTable)
+    if(Api) {fetch(`http://127.0.0.1:8000/api/v3/models/${id}`, {method: 'DELETE', headers: {"apikey":`${Api}`}}).then(updTable)}
     else{alert("Введите имя")}
 })
 
