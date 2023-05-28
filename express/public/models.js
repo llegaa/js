@@ -1,8 +1,8 @@
-let content
+
+let content=[]
 async function getModels() {
     let response = await fetch('http://127.0.0.1:8000/api/v3/models')
     content = await response.json()
-    console.log(content)
     let list = document.getElementById('model')
     if(content.length){
         for (let arrayKey in content) {
@@ -27,14 +27,16 @@ function updTable(){
 update.addEventListener("click", updTable)
 
 let Api
+let inputName
 async function sendName(){
-    let input = document.querySelector('input');
+    inputName = document.querySelector('input').value;
     let name_user = {
-        name: input.value
+        name: inputName
     }
-    if(input.value){
+    if(inputName){
     let response = await fetch('http://127.0.0.1:8000/api/v3/login', {method: 'POST',headers:{"Content-type":"application/json"}, body: JSON.stringify(name_user)})
-    let notify = document.getElementById("notify")
+        document.getElementById("add").removeAttribute("disabled")
+        let notify = document.getElementById("notify")
     Api = await response.text()
     console.log(Api)
     notify.outerHTML = "<label for \"name\" style=\"color: #006400\">Имя введено</label>"
@@ -73,11 +75,60 @@ document.getElementById("table").addEventListener('click',function(event) {
             <tr><td>Имя:</td><td>${content[arrayKey].name}</td></tr>
             <tr><td>Имя модели:</td><td>${content[arrayKey].name_model}</td></tr>
             <tr><td>Тип:</td><td>${content[arrayKey].type}</td></tr>
-            <tr><td>Модель:</td><td>${content[arrayKey].model}</td></tr>
-            <tr><td>Описание:</td><td>${content[arrayKey].description}</td></tr> 
+            <tr><td>Цвет:</td><td>${content[arrayKey].color}</td></tr>
+            <tr><td>Описание:</td><td>${content[arrayKey].descriptions}</td></tr> 
             <tr><td>Комментарии:</td><td>${content[arrayKey].comments}</td></tr>
             <tr><td>Время создания:</td><td>${content[arrayKey].time_create}</td></tr>`
             }
         }
+    }
+})
+document.getElementById("add").addEventListener('click',()=>{
+    let add = document.getElementById("addMod")
+         add.innerHTML+=`
+    <form id="form">
+    <p>Добавление модели</p>
+    <ul>
+    <li><select id="selectType">
+    <option value="cube">Куб</option>
+    <option value="sphere">Сфера</option>
+    </select></li>
+    <li><input id="color" type="color"></li>
+    <li><input id="name_model" type="text" placeholder="Имя модели" required></li>
+    <li><textarea id="descriptions" placeholder="Описание" required></textarea></li>
+    <li><textarea  id="comments" placeholder="Комментарий" required></textarea></li>
+    </ul>
+    <button id="submit">Отправить модель</button>
+    <button id="vie" type="button">Посмотеть модель</button>
+    </form>`
+    document.getElementById("add").setAttribute('disabled', "")
+    document.getElementById("form").scrollIntoView({block: "center", behavior: "smooth"})
+})
+
+document.getElementById("addMod").addEventListener('click',async (event)=>{
+    if(event.target.id !== "submit") return 0
+    else{
+        let typeGeometry = document.getElementById("selectType").value
+        let colorGeometry = document.getElementById("color").value
+        let nameGeometry = document.getElementById("name_model").value
+        let descriptionsGeometry = document.getElementById("descriptions").value
+        let commentsGeometry = document.getElementById("comments").value
+        let newModel = {
+            name:inputName,
+            name_model:nameGeometry,
+            type:typeGeometry,
+            color:colorGeometry,
+            descriptions:descriptionsGeometry,
+            comments:commentsGeometry
+
+         }
+         await fetch('http://127.0.0.1:8000/api/v3/models', {
+                method: 'POST',
+                headers: {"apikey": `${Api}`, "Content-type": "application/json"},
+                body: JSON.stringify(newModel)
+            })
+            this.outerHTML = "<div id=\"addMod\"></div>"
+            document.getElementById("submit").type = "submit"
+
     }
 })

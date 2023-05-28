@@ -74,7 +74,6 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 
 app.use(badURL)
 app.use(err)
-//
 app.listen(port, host, () => {
     console.log(`Server starting on ${hosting}`)
 })

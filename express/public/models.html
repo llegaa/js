@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>Title</title>
 </head>
 <body>
-    <h1>Express</h1>
+    <div class="frog"><h1>Express</h1>
+    <img class="circle" src= "https://mobimg.b-cdn.net/v3/fetch/a8/a8f7919d08aaf2dd6b4b39ccb06f6a09.jpeg"></div>
     <form method="post">
         <span id="notify"><label for="name" >Введите имя:</label></span>
         <input type="text" name="name" required placeholder="lena" id="name">
@@ -15,10 +16,13 @@
     </form>
     <button id="update">Обновить таблицу</button>
     <div id="table" class="flex">
-        <table id="model"><caption>Список моделей</caption></table>
+        <div id="modelup"><table id="model"><caption>Список моделей</caption></table></div>
         <div id="flex-div"></div>
     </div>
+    <div id="addMod"></div>
+    <button id="add" disabled>Добавить модель</button>
     <script src="models.js"></script>
+    <script type="module" src="myThree.js"></script>
 
 </body>
 </html>

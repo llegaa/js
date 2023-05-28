@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 :root {
     font-family: "Montserrat", sans-serif;
-padding-bottom: 30px;
 }
 main {
     max-width: 38rem;
@@ -10,12 +9,12 @@ main {
 }
 html {
     max-width: 70ch;
-    padding: 3em 1em;
+    padding: 3em 3em;
     margin: auto;
     line-height: 1.75;
     font-size: 1.25em;
 }
-h1,h2,h3,h4,h5,h6 {
+h2,h3,h4,h5,h6 {
     margin: 3em 0 1em;
 }
 
@@ -23,6 +22,13 @@ p,ul,ol {
     margin-bottom: 2em;
     color: #1d1d1d;
     font-family: sans-serif;
+}
+ul {
+    list-style:none;
+}
+ul, li { /* reset the margin and padding */
+    margin: 0;
+    padding: 0;
 }
 .flex{
     display: flex;
@@ -53,9 +59,9 @@ button{
     border-color: #006400;
     font-family: "Montserrat", sans-serif
 }
-input {
+#name {
     box-sizing: border-box;
-    width: 286px;
+    width: 250px;
     height: 50px;
     border: 2px solid #006400;
     border-radius: 5px;
@@ -68,4 +74,70 @@ input {
 #update{
     margin-bottom: 10px;
     margin-top: 20px;
+}
+.circle {
+    width: 150px;
+    height: 150px;
+    border: 3px solid #006400;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover
+}
+.frog{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    align-items: center;
+    margin-bottom:10px;
+}
+#modelup{
+    overflow: auto;
+    height: 400px;
+}
+#modelup::-webkit-scrollbar {
+    display: none;}
+
+#add{
+    position: fixed;
+    bottom: 10px;
+    left: 90%;
+    width: 100px;
+    height: 50px;
+}
+#canvas-wrapper {
+    max-width: 400px;
+    height: 100vh;
+    max-height: 300px;
+
+    border: 1px dashed #228B22;
+}
+#form li{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+#form textarea, #form input, #form select{
+
+    border: 2px solid #006400;
+    border-radius: 5px;
+    width: 250px;
+    min-height: 35px;
+    font-size: 1em;
+    font-family: "Montserrat", sans-serif}
+
+#addMod p{
+    color: #006400;
+    font-size: 1.8em;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+}
+#form{
+border-radius: 5px;
+    width: 100%;
+    border-bottom: 10px solid #228B22;
+    border-top: 10px solid #228B22;
+    padding-bottom: 1em;
+
 }
