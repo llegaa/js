@@ -48,7 +48,7 @@ export async function getModels(req, res, next){
 export async function addModels(req, res, next){
     try {
         const data = req.body;
-        if (data.name && data.name_model && data.type && data.color){
+        if (data.name && data.name_model && data.type && data.color && data.size){
             await addOne("models", data)
             res.send("data send")
         }
@@ -87,7 +87,7 @@ export async function updateModel(req, res, next) {
     try {
         const data = req.body;
         if (ObjectId.isValid(req.params.id)) {
-            if (data.name || data.name_model || data.type || data.color || data.descriptions || data.comments) {
+            if (data.name || data.name_model || data.type || data.color || data.descriptions || data.comments || data.size) {
                 await updModel(req.params.id, data)
                 res.status(200).send("data update")
             } else {

@@ -34,7 +34,8 @@ ul, li { /* reset the margin and padding */
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 50px;
+    gap: 40px;
+    padding-bottom: 20px;
 }
 table {
     font-size: 14px;
@@ -57,7 +58,8 @@ caption{
 button{
     border-radius: 5px;
     border-color: #006400;
-    font-family: "Montserrat", sans-serif
+    font-family: "Montserrat", sans-serif;
+    background-color: white;
 }
 #name {
     box-sizing: border-box;
@@ -106,24 +108,24 @@ button{
     width: 100px;
     height: 50px;
 }
-#canvas-wrapper {
-    max-width: 400px;
-    height: 100vh;
+#canvas-wrapper, #can-wrap{
+    max-width: 200px;
+    height: 200px;
     max-height: 300px;
-
-    border: 1px dashed #228B22;
+    border: 1px solid #228B22;
+    margin-top: 10px;
 }
 #form li{
     margin-bottom: 10px;
     margin-top: 10px;
 }
-#form textarea, #form input, #form select{
+#form textarea, #form input, #form select, #form option{
 
     border: 2px solid #006400;
     border-radius: 5px;
     width: 250px;
     min-height: 35px;
-    font-size: 1em;
+    font-size: 14px;
     font-family: "Montserrat", sans-serif}
 
 #addMod p{
@@ -133,11 +135,14 @@ button{
     margin-bottom: 0.5em;
     margin-top: 0.5em;
 }
-#form{
-border-radius: 5px;
+#formdiv{
+
     width: 100%;
     border-bottom: 10px solid #228B22;
     border-top: 10px solid #228B22;
     padding-bottom: 1em;
-
+}
+#flex-div{
+    display: flex;
+    flex-direction: column;
 }
