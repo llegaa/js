@@ -1,14 +1,22 @@
 import * as THREE from "https://unpkg.com/three/build/three.module.js";
 
 document.getElementById("table").addEventListener('click',modelview)
-document.getElementById("addMod").addEventListener('click',modelview)
-   function modelview (event){
-       let canvasWrapper
-       let typeGeometry
-       let colorGeometry
-       let geometry
-       let sizeGeometry
-    if(event.target.id==="vie"){
+
+//document.getElementById("name").addEventListener("blur", f)
+
+document.getElementById("add").addEventListener("click", ()=>{
+    document.getElementById("color").addEventListener("blur",modelview)
+    document.getElementById("selectType").addEventListener("blur",modelview)
+    document.getElementById("size").addEventListener("blur",modelview)
+})
+
+function modelview (event){
+    let canvasWrapper
+    let typeGeometry
+    let colorGeometry
+    let geometry
+    let sizeGeometry
+    if(event.target.id==="color" || event.target.id==="selectType" || event.target.id==="size"){
         typeGeometry = document.getElementById("selectType").value
         colorGeometry = document.getElementById("color").value
         sizeGeometry = document.getElementById("size").value
@@ -25,47 +33,47 @@ document.getElementById("addMod").addEventListener('click',modelview)
         sizeGeometry=document.getElementById("sizTable").innerHTML
         canvasWrapper = document.getElementById("can-wrap");
     }
-const scene = new THREE.Scene();
-scene.background = new THREE.Color("white");
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color("white");
 
 
-let camera = new THREE.PerspectiveCamera(
-    60,
-    canvasWrapper.clientWidth / canvasWrapper.clientHeight,
-    1,
-    1000
-);
+    let camera = new THREE.PerspectiveCamera(
+        60,
+        canvasWrapper.clientWidth / canvasWrapper.clientHeight,
+        1,
+        1000
+    );
 
-let cameraTarget = new THREE.Vector3(0, 0, 0);
-camera.position.x = 10;
-camera.position.y = 10;
-camera.position.z = -10;
+    let cameraTarget = new THREE.Vector3(0, 0, 0);
+    camera.position.x = 10;
+    camera.position.y = 10;
+    camera.position.z = -10;
 
-camera.lookAt(cameraTarget);
-scene.add(camera);
+    camera.lookAt(cameraTarget);
+    scene.add(camera);
 
-       if(typeGeometry === "cube") {
-           geometry = new THREE.BoxGeometry(sizeGeometry, sizeGeometry, sizeGeometry);
+    if(typeGeometry === "cube") {
+        geometry = new THREE.BoxGeometry(sizeGeometry, sizeGeometry, sizeGeometry);
 
-       }else if(typeGeometry==="sphere") {geometry = new THREE.SphereGeometry(sizeGeometry/2);}
-       else{
-           geometry = new THREE.ConeGeometry( Math.sqrt(Math.pow(sizeGeometry,2)/2), Math.sqrt(Math.pow(sizeGeometry,2)/2), 4 );
-       }
+    }else if(typeGeometry==="sphere") {geometry = new THREE.SphereGeometry(sizeGeometry/2);}
+    else{
+        geometry = new THREE.ConeGeometry( Math.sqrt(Math.pow(sizeGeometry,2)/2), Math.sqrt(Math.pow(sizeGeometry,2)/2), 4 );
+    }
 
-           let material = new THREE.MeshPhongMaterial({
-               color: colorGeometry,
-               dithering: true,
-               specular: 0x111111,
-               shininess: 200,
-               side: THREE.DoubleSide
-           });
-           let cube = null;
-           cube = new THREE.Mesh(geometry, material);
-           cube.position.y = 0;
-           cube.position.x = 0;
-           cube.position.z = 0;
-           cube.castShadow = true;
-           scene.add(cube);
+    let material = new THREE.MeshPhongMaterial({
+        color: colorGeometry,
+        dithering: true,
+        specular: 0x111111,
+        shininess: 200,
+        side: THREE.DoubleSide
+    });
+    let cube = null;
+    cube = new THREE.Mesh(geometry, material);
+    cube.position.y = 0;
+    cube.position.x = 0;
+    cube.position.z = 0;
+    cube.castShadow = true;
+    scene.add(cube);
 
 // let material3 = new THREE.MeshPhongMaterial({ color: "BlueViolet", dithering: true, side: THREE.DoubleSide });
 // let triangle = new THREE.Mesh(geometry3, material3);
@@ -73,34 +81,32 @@ scene.add(camera);
 // triangle.castShadow = true;
 // scene.add(triangle);
 
-const light = new THREE.PointLight( "#fff", 1, 100);
-light.position.set(0, 6, -15);
-light.castShadow = true;
-scene.add(light);
+    const light = new THREE.PointLight( "#fff", 1, 100);
+    light.position.set(0, 6, -15);
+    light.castShadow = true;
+    scene.add(light);
 
-const spotLight = new THREE.SpotLight("#ffffff");
-spotLight.position.set(0, 10, 0);
-spotLight.castShadow = true;
-spotLight.intensity = 2;
-spotLight.shadow.camera.near = 1;
-spotLight.shadow.camera.far = 25;
-spotLight.shadow.mapSize.width = 2048;
-spotLight.shadow.mapSize.height = 2048;
-spotLight.shadow.bias = -0.01;
-spotLight.target.position.set(0, 0, 0);
-scene.add(spotLight)
+    const spotLight = new THREE.SpotLight("#ffffff");
+    spotLight.position.set(0, 10, 0);
+    spotLight.castShadow = true;
+    spotLight.intensity = 2;
+    spotLight.shadow.camera.near = 1;
+    spotLight.shadow.camera.far = 25;
+    spotLight.shadow.mapSize.width = 2048;
+    spotLight.shadow.mapSize.height = 2048;
+    spotLight.shadow.bias = -0.01;
+    spotLight.target.position.set(0, 0, 0);
+    scene.add(spotLight)
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(canvasWrapper.clientWidth, canvasWrapper.clientHeight);
-canvasWrapper.appendChild(renderer.domElement);
-renderer.shadowMap.enabled = true;
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(canvasWrapper.clientWidth, canvasWrapper.clientHeight);
+    canvasWrapper.appendChild(renderer.domElement);
+    renderer.shadowMap.enabled = true;
 
-function animate() {
-    requestAnimationFrame(animate)
+    function animate() {
+        requestAnimationFrame(animate)
 
-    renderer.render(scene, camera);
+        renderer.render(scene, camera);
+    }
+    animate()
 }
-animate()
-}
-document.getElementById("table").addEventListener('click',modelview)
-document.getElementById("addMod").addEventListener('click',modelview)
