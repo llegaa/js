@@ -107,7 +107,7 @@ button{
     width: 100px;
     height: 50px;
 }
-#canvas-wrapper, #can-wrap{
+#canvas-wrapper, #can-wrap, #can-wrap1{
     min-width: 200px;
     height: 200px;
     max-height: 300px;
@@ -118,14 +118,17 @@ button{
     margin-bottom: 10px;
     margin-top: 10px;
 }
-#form textarea, #form input, #form select, #form option{
+textarea, input, select, option{
 
     border: 2px solid #006400;
     border-radius: 5px;
     width: 250px;
     min-height: 35px;
     font-size: 14px;
-    font-family: "Montserrat", sans-serif}
+    font-family: "Montserrat", sans-serif;
+margin-top: 5px;
+margin-bottom: 5px}
+
 
 #addMod p{
     color: #006400;
@@ -140,7 +143,7 @@ button{
     padding-bottom: 1em;
     display: flex;
     flex-direction: row;
-    gap: 50px;
+    gap: 30px;
     align-items: center;
 }
 #flex-div{

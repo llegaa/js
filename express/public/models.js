@@ -40,6 +40,9 @@ async function sendName(){
     Api = await response.text()
     console.log(Api)
     notify.outerHTML = "<label for \"name\" style=\"color: #006400\">Имя введено</label>"
+        if(checkName === inputName){
+            document.getElementById("redact").removeAttribute("disabled")
+        }
     }
 }
 
@@ -54,7 +57,9 @@ document.getElementById("table").addEventListener('click',function(event) {
 
 //console.log(Api)
 let name = undefined
+let checkName
 document.getElementById("table").addEventListener('click',function(event) {
+
     let flex_div
     let target = event.target;
     let id = event.target.id;
@@ -63,10 +68,11 @@ document.getElementById("table").addEventListener('click',function(event) {
         flex_div = document.getElementById("flex-div")
         flex_div.outerHTML = '<table id="flex-div"></table>'
         name = undefined
-    }else{
+    } else{
         for (let arrayKey in content) {
             if (content[arrayKey]._id === event.target.name){
                 name = event.target.name
+                checkName = content[arrayKey].name
                 flex_div = document.getElementById("flex-div")
                 flex_div.outerHTML = `<div id="flex-div">
             <table id="flexDiv">
@@ -78,10 +84,16 @@ document.getElementById("table").addEventListener('click',function(event) {
             <tr><td>Размер:</td><td id="sizTable">${content[arrayKey].size}</td></tr>
             <tr><td>Описание:</td><td>${content[arrayKey].descriptions}</td></tr> 
             <tr><td>Комментарии:</td><td>${content[arrayKey].comments}</td></tr>
-            <tr><td>Время создания:</td><td>${content[arrayKey].time_create}</td></tr></table>
+            <tr><td>Время создания:</td><td>${content[arrayKey].time_create}</td></tr>
+            <tr><td></td><td><button id="redact" name="${name}" disabled>Редактировать модель</button></td></tr></table>
             <div id="can-wrap"></div>
             </div>`
+            }
              }
+        // alert(checkName)
+        // alert(inputName)
+        if(checkName === inputName){
+            document.getElementById("redact").removeAttribute("disabled")
         }
     }
 })
@@ -99,8 +111,8 @@ document.getElementById("add").addEventListener('click',()=>{
     <li><input id="color" value="#228B22" type="color"></li>
     <li><input type="number" id="size" min=1 max=10 placeholder="Размер модели" required></li>
     <li><input id="name_model" type="text" placeholder="Имя модели" required></li>
-    <li><textarea id="descriptions" placeholder="Описание" required></textarea></li>
-    <li><textarea  id="comments" placeholder="Комментарий" required></textarea></li>
+    <li><textarea id="descriptions" placeholder="Описание"></textarea></li>
+    <li><textarea  id="comments" placeholder="Комментарий"></textarea></li>
     </ul>
     <button id="submit">Отправить модель</button>
     </form>
@@ -138,4 +150,67 @@ document.getElementById("addMod").addEventListener('click',async (event)=>{
             document.getElementById("submit").type = "submit"
 
     }
+})
+document.getElementById("table").addEventListener('click',async function(event) {
+    if(event.target.id==="submit1"){
+        let updModel = {
+            name_model:document.getElementById("name_model1").value,
+            type:document.getElementById("typTable1").value,
+            color:document.getElementById("colTable1").value,
+            size:document.getElementById("sizTable1").value,
+            descriptions:document.getElementById("descriptions1").value,
+            comments:document.getElementById("comments1").value
+        }
+        await fetch(`http://127.0.0.1:8000/api/v3/models/${event.target.name}`, {
+            method: 'PUT',
+            headers: {"apikey": `${Api}`, "Content-type": "application/json"},
+            body: JSON.stringify(updModel)
+        })
+    }
+
+if(event.target.id==="redact") {
+    for (let arrayKey in content) {
+        if (content[arrayKey]._id === event.target.name){
+            let flex_div = document.getElementById("flex-div")
+            flex_div.outerHTML =`<div id="flex-div">
+            <form>
+            <ul id="change"></ul>
+            </form>
+             <div id="can-wrap1"></div><div>`
+            let change= document.getElementById("change")
+            if(content[arrayKey].type==="cube"){
+                change.innerHTML +=`
+            <li><select id="typTable1">
+            <option value="cube">Куб</option>
+            <option value="sphere">Сфера</option>
+            <option value="pyramid">Пирамида</option>
+            </select></li>`
+            }else if(content[arrayKey].type==="sphere"){
+                change.innerHTML +=`
+            <li><select id="typTable1">
+            <option value="sphere">Сфера</option>
+            <option value="cube">Куб</option>
+            <option value="pyramid">Пирамида</option>
+            </select></li>`
+            }else{
+                change.innerHTML +=`
+            <li><select id="typTable1">
+            <option value="pyramid">Пирамида</option>
+            <option value="cube">Куб</option>
+            <option value="sphere">Сфера</option>
+            </select></li>`
+            }
+            change.innerHTML += `
+    <li><input id="colTable1" value="${content[arrayKey].color}" type="color"></li>
+    <li><input type="number" id="sizTable1" min=1 max=10 value="${content[arrayKey].size}" required></li>
+    <li><input id="name_model1" type="text" value="${content[arrayKey].name_model}" required></li>
+    <li><textarea id="descriptions1" required>${content[arrayKey].descriptions}</textarea></li>
+    <li><textarea  id="comments1" placeholder="Комментарий" required>${content[arrayKey].comments}</textarea></li>
+    <li><button id="submit1" name="${content[arrayKey]._id}">Сохранить</button></li>`
+        }}
+
+}})
+
+document.getElementById("table").addEventListener('click',function(event) {
+
 })
